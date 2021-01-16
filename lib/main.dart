@@ -25,9 +25,10 @@ class MyHomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text("Flutter app"),
         ),
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
+        body: SingleChildScrollView(
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
               Card(
                 child: Container(
                   child: Text("CHART"),
@@ -37,6 +38,6 @@ class MyHomePage extends StatelessWidget {
                 color: Colors.blue,
               ),
               UserTransactions()
-            ]));
+            ])));
   }
 }
