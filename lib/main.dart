@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:second_app/models/transaction.dart';
+import 'package:second_app/widgets/chart.dart';
 import 'package:second_app/widgets/new_transaction.dart';
 import 'package:second_app/widgets/transaction_list.dart';
 
@@ -35,14 +37,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    Transaction(
-        id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: "t2",
-        title: "Weekly Groceries",
-        amount: 16.54,
-        date: DateTime.now()),
+    // Transaction(
+    //     id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t2",
+    //     title: "Weekly Groceries",
+    //     amount: 16.54,
+    //     date: DateTime.now()),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransaction
+        .where(
+            (tx) => tx.date.isAfter(DateTime.now().subtract(Duration(days: 7))))
+        .toList();
+  }
 
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -88,14 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-            Card(
-              child: Container(
-                child: Text("CHART"),
-                width: double.infinity,
-              ),
-              elevation: 5,
-              color: Colors.blue,
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransaction)
           ])),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
